@@ -11,28 +11,23 @@ import java.util.NoSuchElementException;
  * @param <I>
  *            The items to hold in the Deque
  */
-public class Deque<I> implements Iterable<I> {
+public final class Deque<I> implements Iterable<I> {
 
     private boolean debuggin = true;
 
     /** index of the first item. */
-    private int first;
+    private Node<I> first = null;
     /** index of the last item. */
-    private int last;
+    private Node<I> last = null;
     /** counter of items in the Deque. */
-    private int count;
-    /** item array. */
-    private Object[] items;
+    private int size = 0;
+    
 
     /**
      * Constructs an empty deque with 10 reserved positions.
      */
     public Deque() {
 
-        items = new Object[10];
-        first = -1;
-        last = -1;
-        count = 0;
     }
 
     /**
@@ -42,7 +37,7 @@ public class Deque<I> implements Iterable<I> {
      */
     public boolean isEmpty() {
 
-        return false;
+        return size == 0;
     }
 
     /**
@@ -52,7 +47,13 @@ public class Deque<I> implements Iterable<I> {
      */
     public int size() {
 
-        return -1;
+        return size;
+    }
+
+    private void addFirstNode(Node<I> node) {
+    
+        first = node;
+        last = node;
     }
 
     /**
@@ -63,7 +64,24 @@ public class Deque<I> implements Iterable<I> {
      */
     public void addFirst(I item) {
 
-        validateParamNotNull(item);
+        if (item == null) {
+            throw new NullPointerException("Item can't be null.");
+        }
+        assert item != null;
+        
+        Node<I> node = getNode(item);
+        
+        if (size == 0) {
+            addFirstNode(node);
+        } else {
+            
+            Node<I> prevFirst = first;
+            node.setNext(prevFirst);
+            prevFirst.setPrev(node);
+            first = node;
+        }
+        
+        size++;
     }
 
     /**
@@ -74,7 +92,23 @@ public class Deque<I> implements Iterable<I> {
      */
     public void addLast(I item) {
 
-        validateParamNotNull(item);
+        if (item == null) {
+            throw new NullPointerException("Item can't be null.");
+        }
+        assert item != null;
+        
+        Node<I> node = getNode(item);
+        
+        if (size == 0) {
+            addFirstNode(node);
+        } else {
+
+            Node<I> prevLast = last;
+            prevLast.setNext(node);
+            node.setPrev(prevLast);
+            last = node;
+        }
+        size++;
     }
 
     /**
@@ -85,7 +119,11 @@ public class Deque<I> implements Iterable<I> {
     public I removeFirst() {
 
         validateDequeIsNotEmpty();
-        return null;
+        
+        I item = first.getItem();
+        first = first.getNext();
+        size--;
+        return item;
     }
 
     /**
@@ -96,7 +134,11 @@ public class Deque<I> implements Iterable<I> {
     public I removeLast() {
 
         validateDequeIsNotEmpty();
-        return null;
+        
+        I item = last.getItem();
+        last = last.getPrev();
+        size--;
+        return item;
     }
 
     /**
@@ -104,41 +146,83 @@ public class Deque<I> implements Iterable<I> {
      */
     public Iterator<I> iterator() {
 
-        return new Iterator<I>() {
-
-            @Override
-            public boolean hasNext() {
-                // TODO Auto-generated method stub
-                return false;
-            }
-
-            @Override
-            public I next() {
-                // TODO Auto-generated method stub
-                return null;
-            }
-
-            @Override
-            public void remove() {
-
-                throw new UnsupportedOperationException(
-                        "You can't remove from an iterator.");
-            }
-
-        };
-    }
-
-    private void validateParamNotNull(I item) {
-
-        if (item == null) {
-            throw new NullPointerException("Item can't be null.");
-        }
+        return new DequeIterator();
     }
 
     private void validateDequeIsNotEmpty() {
 
-        if (count == 0) {
+        if (size == 0) {
             throw new NoSuchElementException("The Deque can't be empty");
         }
     }
+
+    final class DequeIterator implements Iterator<I> {
+        
+        private Node<I> current = first;
+
+        @Override
+        public boolean hasNext() {
+            return current != null;
+        }
+
+        @Override
+        public I next() {
+
+            if (!hasNext()) {
+                throw new NoSuchElementException(
+                        "There is no more elements to retrieve");
+            }
+            I item  = current.getItem();
+            current = current.getNext();
+            return item;
+        }
+
+        @Override
+        public void remove() {
+
+            throw new UnsupportedOperationException(
+                    "You can't remove from an iterator.");
+        }
+        
+    }
+    
+    private <I> Node<I> getNode(I item) {
+        
+        return new Node<I>(item);
+    }
+    
+    private final class Node<I> {
+        
+        private final I item;
+        private Node<I> next;
+        private Node<I> prev;
+        
+        public Node(I item) {
+            this.item = item;
+        }
+        
+        public I getItem() {
+            return item;
+        }
+        
+        public void setNext(Node<I> newNext) {
+            
+            this.next = newNext;
+        }
+        
+        public Node<I> getNext() {
+            
+            return this.next;
+        }
+        
+        public void setPrev(Node<I> newPrev) {
+            
+            this.prev = newPrev;
+        }
+
+        public Node<I> getPrev() {
+            return prev;
+        }
+    }
 }
+
