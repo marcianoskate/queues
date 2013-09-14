@@ -59,7 +59,7 @@ public class RandomizedQueue<I> implements Iterable<I> {
         int pos = 0;
         for (Object current : indexes) {
 
-            newArray[pos] = current;
+            newArray[pos++] = current;
         }
 
         indexes = newArray;
@@ -70,8 +70,34 @@ public class RandomizedQueue<I> implements Iterable<I> {
         if (size == 0) {
             throw new NoSuchElementException("The Queue is empty");
         }
+        
+        int index = 0;
+        
+        Node<I> nodeToReturn = null;
+        if (index == 0) {
+            
+            nodeToReturn = first;
+            if (first == last) {
+                first = null;
+                last = null;
+            } else {
+                
+                first = nodeToReturn.next;
+                nodeToReturn.setNext(null);
+                first.setPrev(null);
+            }
+            
+            int current = 0;
+            while (current < size - 1) {
+                
+                indexes[current] = indexes[current + 1];
+                current++;
+            }
+            indexes[size - 1] = null;
+        }
 
-        return null;
+        size--;
+        return nodeToReturn.getItem();
     }
 
     public I sample() {
