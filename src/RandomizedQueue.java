@@ -30,6 +30,39 @@ public class RandomizedQueue<I> implements Iterable<I> {
             throw new NullPointerException("Can't add a null item.");
         }
         assert item != null;
+
+        Node<I> node = getNode(item);
+        if (size == indexes.length) {
+
+            resizeIndexes(indexes.length * 2);
+        }
+        indexes[size] = node;
+        if (size != 0) {
+
+            Node<I> prevLast = last;
+            last = node;
+            prevLast.setNext(last);
+            last.setPrev(prevLast);
+        } else {
+
+            first = node;
+            last = node;
+        }
+
+        size++;
+    }
+
+    private void resizeIndexes(int newSize) {
+
+        Object[] newArray = new Object[newSize];
+
+        int pos = 0;
+        for (Object current : indexes) {
+
+            newArray[pos] = current;
+        }
+
+        indexes = newArray;
     }
 
     public I dequeue() {
