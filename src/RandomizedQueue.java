@@ -116,4 +116,43 @@ public class RandomizedQueue<I> implements Iterable<I> {
         }
 
     }
+
+    private <I> Node<I> getNode(I item) {
+
+        return new Node<I>(item);
+    }
+
+    private final class Node<T> {
+
+        private final T item;
+        private Node<T> next;
+        private Node<T> prev;
+
+        public Node(T item) {
+            this.item = item;
+        }
+
+        public T getItem() {
+            return item;
+        }
+
+        public void setNext(Node<T> newNext) {
+
+            this.next = newNext;
+        }
+
+        public Node<T> getNext() {
+
+            return this.next;
+        }
+
+        public void setPrev(Node<T> newPrev) {
+
+            this.prev = newPrev;
+        }
+
+        public Node<T> getPrev() {
+            return prev;
+        }
+    }
 }
