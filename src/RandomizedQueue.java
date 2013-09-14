@@ -71,12 +71,12 @@ public class RandomizedQueue<I> implements Iterable<I> {
             throw new NoSuchElementException("The Queue is empty");
         }
         
-        int index = 0;
+        int index = StdRandom.uniform(size);
         
         Node<I> nodeToReturn = null;
+        nodeToReturn = (Node<I>) indexes[index];
         if (index == 0) {
             
-            nodeToReturn = first;
             if (first == last) {
                 first = null;
                 last = null;
@@ -86,19 +86,34 @@ public class RandomizedQueue<I> implements Iterable<I> {
                 nodeToReturn.setNext(null);
                 first.setPrev(null);
             }
+        } else if (index == size-1) {
             
+            if (first == last) {
+                first = null;
+                last = null;
+            } else {
+                
+                last = nodeToReturn.prev;
+                nodeToReturn.setPrev(null);
+                last.setNext(null);
+            }
+        } else {
             
+            nodeToReturn.getPrev().setNext(nodeToReturn.getNext());
+            nodeToReturn.getNext().setPrev(nodeToReturn.getPrev());
+            nodeToReturn.setNext(null);
+            nodeToReturn.setPrev(null);
         }
         
-        readjustIndexes();
+        readjustIndexes(index);
 
         size--;
         return nodeToReturn.getItem();
     }
 
-    private void readjustIndexes() {
+    private void readjustIndexes(int offset) {
 
-        int current = 0;
+        int current = offset;
         while (current < size - 1) {
             
             indexes[current] = indexes[current + 1];
