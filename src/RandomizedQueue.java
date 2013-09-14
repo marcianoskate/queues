@@ -87,17 +87,24 @@ public class RandomizedQueue<I> implements Iterable<I> {
                 first.setPrev(null);
             }
             
-            int current = 0;
-            while (current < size - 1) {
-                
-                indexes[current] = indexes[current + 1];
-                current++;
-            }
-            indexes[size - 1] = null;
+            
         }
+        
+        readjustIndexes();
 
         size--;
         return nodeToReturn.getItem();
+    }
+
+    private void readjustIndexes() {
+
+        int current = 0;
+        while (current < size - 1) {
+            
+            indexes[current] = indexes[current + 1];
+            current++;
+        }
+        indexes[size - 1] = null;
     }
 
     public I sample() {
