@@ -191,36 +191,36 @@ public final class Deque<I> implements Iterable<I> {
         return new Node<I>(item);
     }
     
-    private final class Node<I> {
+    private final class Node<T> {
         
-        private final I item;
-        private Node<I> next;
-        private Node<I> prev;
+        private final T item;
+        private Node<T> next;
+        private Node<T> prev;
         
-        public Node(I item) {
+        public Node(T item) {
             this.item = item;
         }
         
-        public I getItem() {
+        public T getItem() {
             return item;
         }
         
-        public void setNext(Node<I> newNext) {
+        public void setNext(Node<T> newNext) {
             
             this.next = newNext;
         }
         
-        public Node<I> getNext() {
+        public Node<T> getNext() {
             
             return this.next;
         }
         
-        public void setPrev(Node<I> newPrev) {
+        public void setPrev(Node<T> newPrev) {
             
             this.prev = newPrev;
         }
 
-        public Node<I> getPrev() {
+        public Node<T> getPrev() {
             return prev;
         }
     }
