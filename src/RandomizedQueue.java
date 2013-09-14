@@ -3,13 +3,15 @@ import java.util.NoSuchElementException;
 
 public class RandomizedQueue<I> implements Iterable<I> {
 
-    private Object[] items;
-    
     private int size = 0;
+    private Node<I> first;
+    private Node<I> last;
+
+    private Object[] indexes;
 
     public RandomizedQueue() {
 
-        items = new Object[10];
+        indexes = new Object[2];
     }
 
     public boolean isEmpty() {
