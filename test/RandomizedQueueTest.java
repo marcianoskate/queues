@@ -172,7 +172,7 @@ public class RandomizedQueueTest {
     }
     
     @Test
-    public void removesAnRandomItem() {
+    public void removesARandomItem() {
         
         String[] values = {"one", "two", "three", "four", "five"};
         List<String> list = Arrays.asList(values);
