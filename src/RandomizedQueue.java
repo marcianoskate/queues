@@ -1,11 +1,11 @@
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class RandomizedQueue<I> implements Iterable<I> {
+public class RandomizedQueue<Item> implements Iterable<Item> {
 
     private int size = 0;
-    private Node<I> first;
-    private Node<I> last;
+    private Node<Item> first;
+    private Node<Item> last;
 
     private Object[] indexes;
 
@@ -24,14 +24,14 @@ public class RandomizedQueue<I> implements Iterable<I> {
         return size;
     }
 
-    public void enqueue(I item) {
+    public void enqueue(Item item) {
 
         if (item == null) {
             throw new NullPointerException("Can't add a null item.");
         }
         assert item != null;
 
-        Node<I> node = getNode(item);
+        Node<Item> node = getNode(item);
         if (size == indexes.length) {
 
             resizeIndexes(indexes.length * 2);
@@ -39,7 +39,7 @@ public class RandomizedQueue<I> implements Iterable<I> {
         indexes[size] = node;
         if (size != 0) {
 
-            Node<I> prevLast = last;
+            Node<Item> prevLast = last;
             last = node;
             prevLast.setNext(last);
             last.setPrev(prevLast);
@@ -64,7 +64,7 @@ public class RandomizedQueue<I> implements Iterable<I> {
         indexes = newArray;
     }
 
-    public I sample() {
+    public Item sample() {
 
         if (size == 0) {
             throw new NoSuchElementException("The Queue is empty");
@@ -72,11 +72,11 @@ public class RandomizedQueue<I> implements Iterable<I> {
         
         int index = StdRandom.uniform(size);
 
-        Node<I> nodeToReturn = (Node<I>) indexes[index];
+        Node<Item> nodeToReturn = (Node<Item>) indexes[index];
         return nodeToReturn.getItem();
     }
 
-    public I dequeue() {
+    public Item dequeue() {
 
         if (size == 0) {
             throw new NoSuchElementException("The Queue is empty");
@@ -84,8 +84,8 @@ public class RandomizedQueue<I> implements Iterable<I> {
 
         int index = StdRandom.uniform(size);
 
-        Node<I> nodeToReturn = null;
-        nodeToReturn = (Node<I>) indexes[index];
+        Node<Item> nodeToReturn = null;
+        nodeToReturn = (Node<Item>) indexes[index];
         if (index == 0) {
 
             if (first == last) {
@@ -136,12 +136,12 @@ public class RandomizedQueue<I> implements Iterable<I> {
         indexes[size - 1] = null;
     }
 
-    public Iterator<I> iterator() {
+    public Iterator<Item> iterator() {
 
         return new RandomizedQueueIterator();
     }
 
-    final class RandomizedQueueIterator implements Iterator<I> {
+    private final class RandomizedQueueIterator implements Iterator<Item> {
 
         private int current;
         private Object[] iterator;
@@ -168,13 +168,13 @@ public class RandomizedQueue<I> implements Iterable<I> {
         }
 
         @Override
-        public I next() {
+        public Item next() {
 
             if (!hasNext()) {
                 throw new NoSuchElementException(
                         "There is no more elements to retrieve");
             }
-            I item = ((Node<I>) iterator[current]).getItem();
+            Item item = ((Node<Item>) iterator[current]).getItem();
             current++;
             return item;
         }
