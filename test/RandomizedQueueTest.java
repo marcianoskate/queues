@@ -185,7 +185,7 @@ public class RandomizedQueueTest {
             queue.enqueue(item);
         }
         
-        System.out.println(">>> Enqueing");
+        System.out.println(">>> Randomly removing an item");
         while (!queue.isEmpty()) {
             
             String removed = queue.dequeue();
