@@ -143,7 +143,28 @@ public class RandomizedQueue<I> implements Iterable<I> {
 
     final class RandomizedQueueIterator implements Iterator<I> {
 
-        private Node<I> current = first;
+        private Node<I> current;
+        private Object[] iterator;
+        
+        public RandomizedQueueIterator() {
+            
+            iterator = new Object[size];
+            
+            for (int i = 0; i < size; i++) {
+                
+                int index = StdRandom.uniform(size);
+                while (iterator[index] != null) {
+                    index = StdRandom.uniform(size);
+                }
+                iterator[index] = indexes[i];
+            }
+            if (size > 0) {
+                
+                current = (Node<I>) iterator[0];
+            } else {
+                current = null;
+            }
+        }
 
         @Override
         public boolean hasNext() {
