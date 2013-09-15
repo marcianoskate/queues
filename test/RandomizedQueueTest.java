@@ -33,168 +33,190 @@ public class RandomizedQueueTest {
         queue = getNewQueue();
         queue.enqueue(null);
     }
-    
+
     @Test(expected = NoSuchElementException.class)
     public void throwsNoSuchElementWhenSamplingEmptyQueue() {
-        
+
         RandomizedQueue<String> queue;
         queue = getNewQueue();
         queue.sample();
     }
-    
+
     @Test(expected = NoSuchElementException.class)
     public void throwsNoSuchElementWhenDequeingEmptyQueue() {
-        
+
         RandomizedQueue<String> queue;
         queue = getNewQueue();
         queue.dequeue();
     }
-    
+
     @Test(expected = UnsupportedOperationException.class)
     public void throwsUnsupportedOperationWhenRemovingFromTheIterator() {
-        
+
         RandomizedQueue<String> queue;
         queue = getNewQueue();
         queue.iterator().remove();
     }
-    
+
     @Test(expected = NoSuchElementException.class)
     public void throwsNoSuchElementWhenExecutingNextOnAnEmptyQueue() {
-        
+
         RandomizedQueue<String> queue;
         queue = getNewQueue();
         queue.iterator().next();
     }
-    
+
     @Test
     public void newQueueIsEmpty() {
-        
+
         RandomizedQueue<String> queue;
         queue = getNewQueue();
-        
+
         Assert.assertTrue(queue.isEmpty());
         Assert.assertEquals(0, queue.size());
     }
-    
+
     @Test
     public void whenAddingAnItemItIncrements() {
-        
+
         RandomizedQueue<String> queue;
         queue = getNewQueue();
-        
+
         queue.enqueue("hello");
-        
+
         Assert.assertFalse(queue.isEmpty());
         Assert.assertEquals(1, queue.size());
     }
-    
+
     @Test
     public void canIterateOverTheQueue() {
-        
+
         RandomizedQueue<String> queue;
         queue = getNewQueue();
-        
+
         String item = "hello";
         queue.enqueue(item);
-        
+
         Iterator<String> iterator = queue.iterator();
         Assert.assertTrue(iterator.hasNext());
         Assert.assertEquals(item, iterator.next());
     }
-    
+
     @Test
     public void enqueueMultipleValues() {
-        
-        String[] values = {"one", "two", "three", "four", "five"};
-        
+
+        String[] values = { "one", "two", "three", "four", "five" };
+
         RandomizedQueue<String> queue;
         queue = getNewQueue();
 
         for (String item : values) {
-            
+
             queue.enqueue(item);
         }
-        
+
         Assert.assertFalse(queue.isEmpty());
         Assert.assertEquals(5, queue.size());
     }
-    
+
     @Test
     public void addingMoreThanTenValues() {
-        
-        String[] values = {"one", "two", "three", "four", "five",
-                "six", "seven", "eight", "nine", "ten",
-                "eleven", "twelve", "thirteen", "fourteen", "fifteen"};
-        
+
+        String[] values = { "one", "two", "three", "four", "five", "six",
+                "seven", "eight", "nine", "ten", "eleven", "twelve",
+                "thirteen", "fourteen", "fifteen" };
+
         RandomizedQueue<String> queue;
         queue = getNewQueue();
 
         for (String item : values) {
-            
+
             queue.enqueue(item);
         }
-        
+
         Assert.assertFalse(queue.isEmpty());
         Assert.assertEquals(15, queue.size());
-        
+
         System.out.println(">>> Iterating over 15 items");
         int count = 0;
         for (String item : queue) {
-            
+
             Assert.assertEquals(values[count++], item);
             System.out.println(item);
         }
     }
-    
+
     @Test
     public void iteratingOverMultipleValues() {
-        
-        String[] values = {"one", "two", "three", "four", "five"};
-        
+
+        String[] values = { "one", "two", "three", "four", "five" };
+
         RandomizedQueue<String> queue;
         queue = getNewQueue();
 
         for (String item : values) {
-            
+
             queue.enqueue(item);
         }
-        
+
         Assert.assertFalse(queue.isEmpty());
         Assert.assertEquals(5, queue.size());
-        
+
         System.out.println(">>> Iterating over five items");
         int count = 0;
         for (String item : queue) {
-            
+
             Assert.assertEquals(values[count++], item);
             System.out.println(item);
         }
     }
-    
+
     @Test
     public void removesARandomItem() {
-        
-        String[] values = {"one", "two", "three", "four", "five"};
+
+        String[] values = { "one", "two", "three", "four", "five" };
         List<String> list = Arrays.asList(values);
-        
+
         RandomizedQueue<String> queue;
         queue = getNewQueue();
-        
+
         for (String item : values) {
-            
+
             queue.enqueue(item);
         }
-        
+
         System.out.println(">>> Randomly removing an item");
         while (!queue.isEmpty()) {
-            
+
             String removed = queue.dequeue();
             System.out.println(removed);
             Assert.assertTrue(list.contains(removed));
         }
         System.out.println("=================");
-        
-        
+
     }
-    
+
+    @Test
+    public void samplingDoesntChangeTheQueueSize() {
+
+        String[] values = { "one", "two", "three", "four", "five" };
+        List<String> list = Arrays.asList(values);
+
+        RandomizedQueue<String> queue;
+        queue = getNewQueue();
+
+        for (String item : values) {
+
+            queue.enqueue(item);
+        }
+
+        System.out.println(">>> Sampling shouldn't change the queue size");
+
+        String removed = queue.sample();
+        System.out.println(removed);
+        Assert.assertTrue(list.contains(removed));
+        Assert.assertEquals(values.length, queue.size());
+        System.out.println("=================");
+
+    }
 }
