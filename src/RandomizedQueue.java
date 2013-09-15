@@ -56,10 +56,9 @@ public class RandomizedQueue<I> implements Iterable<I> {
 
         Object[] newArray = new Object[newSize];
 
-        int pos = 0;
-        for (Object current : indexes) {
+        for (int i = 0; i < size; i++) {
 
-            newArray[pos++] = current;
+            newArray[i] = indexes[i];
         }
 
         indexes = newArray;
