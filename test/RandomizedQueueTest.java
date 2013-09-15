@@ -219,4 +219,31 @@ public class RandomizedQueueTest {
         System.out.println("=================");
 
     }
+    
+    @Test
+    public void independentIterators() {
+        
+        String[] values = { "one", "two", "three", "four", "five" };
+        List<String> list = Arrays.asList(values);
+
+        RandomizedQueue<String> queue;
+        queue = getNewQueue();
+
+        for (String item : values) {
+
+            queue.enqueue(item);
+        }
+
+        System.out.println(">>> Iterating over independent iterators");
+
+        for (String out : queue) {
+            
+            System.out.println(" out: " + out);
+            for (String in : queue) {
+                
+                System.out.println("   in: " + in); 
+            }
+        }
+        System.out.println("=================");
+    }
 }

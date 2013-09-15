@@ -143,7 +143,7 @@ public class RandomizedQueue<I> implements Iterable<I> {
 
     final class RandomizedQueueIterator implements Iterator<I> {
 
-        private Node<I> current;
+        private int current;
         private Object[] iterator;
         
         public RandomizedQueueIterator() {
@@ -158,17 +158,13 @@ public class RandomizedQueue<I> implements Iterable<I> {
                 }
                 iterator[index] = indexes[i];
             }
-            if (size > 0) {
                 
-                current = (Node<I>) iterator[0];
-            } else {
-                current = null;
-            }
+            current = 0;
         }
 
         @Override
         public boolean hasNext() {
-            return current != null;
+            return current < iterator.length;
         }
 
         @Override
@@ -178,8 +174,8 @@ public class RandomizedQueue<I> implements Iterable<I> {
                 throw new NoSuchElementException(
                         "There is no more elements to retrieve");
             }
-            I item = current.getItem();
-            current = current.getNext();
+            I item = ((Node<I>) iterator[current]).getItem();
+            current++;
             return item;
         }
 
