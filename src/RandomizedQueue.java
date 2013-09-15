@@ -64,50 +64,62 @@ public class RandomizedQueue<I> implements Iterable<I> {
         indexes = newArray;
     }
 
-    public I dequeue() {
+    public I sample() {
 
         if (size == 0) {
             throw new NoSuchElementException("The Queue is empty");
         }
         
         int index = StdRandom.uniform(size);
-        
+
+        Node<I> nodeToReturn = (Node<I>) indexes[index];
+        return nodeToReturn.getItem();
+    }
+
+    public I dequeue() {
+
+        if (size == 0) {
+            throw new NoSuchElementException("The Queue is empty");
+        }
+
+        int index = StdRandom.uniform(size);
+
         Node<I> nodeToReturn = null;
         nodeToReturn = (Node<I>) indexes[index];
         if (index == 0) {
-            
+
             if (first == last) {
                 first = null;
                 last = null;
             } else {
-                
+
                 first = nodeToReturn.next;
                 nodeToReturn.setNext(null);
                 first.setPrev(null);
             }
-        } else if (index == size-1) {
-            
+        } else if (index == size - 1) {
+
             if (first == last) {
                 first = null;
                 last = null;
             } else {
-                
+
                 last = nodeToReturn.prev;
                 nodeToReturn.setPrev(null);
                 last.setNext(null);
             }
         } else {
-            
+
             nodeToReturn.getPrev().setNext(nodeToReturn.getNext());
             nodeToReturn.getNext().setPrev(nodeToReturn.getPrev());
             nodeToReturn.setNext(null);
             nodeToReturn.setPrev(null);
         }
-        
+
         readjustIndexes(index);
 
         size--;
-        if (size == indexes.length/4) {
+        if (size == indexes.length / 4) {
             resizeIndexes(indexes.length / 2);
         }
         return nodeToReturn.getItem();
@@ -117,19 +129,11 @@ public class RandomizedQueue<I> implements Iterable<I> {
 
         int current = offset;
         while (current < size - 1) {
-            
+
             indexes[current] = indexes[current + 1];
             current++;
         }
         indexes[size - 1] = null;
-    }
-
-    public I sample() {
-
-        if (size == 0) {
-            throw new NoSuchElementException("The Queue is empty");
-        }
-        return null;
     }
 
     public Iterator<I> iterator() {
