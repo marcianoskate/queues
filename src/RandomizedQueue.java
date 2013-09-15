@@ -108,6 +108,9 @@ public class RandomizedQueue<I> implements Iterable<I> {
         readjustIndexes(index);
 
         size--;
+        if (size == indexes.length/4) {
+            resizeIndexes(indexes.length / 2);
+        }
         return nodeToReturn.getItem();
     }
 
