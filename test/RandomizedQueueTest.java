@@ -141,7 +141,7 @@ public class RandomizedQueueTest {
         int count = 0;
         for (String item : queue) {
 
-            Assert.assertEquals(values[count++], item);
+            Assert.assertTrue(Arrays.asList(values).contains(item));
             System.out.println(item);
         }
     }
@@ -166,7 +166,7 @@ public class RandomizedQueueTest {
         int count = 0;
         for (String item : queue) {
 
-            Assert.assertEquals(values[count++], item);
+            Assert.assertTrue(Arrays.asList(values).contains(item));
             System.out.println(item);
         }
     }
