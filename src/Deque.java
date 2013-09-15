@@ -8,17 +8,17 @@ import java.util.NoSuchElementException;
  * 
  * @author marcianoskate
  * 
- * @param <I>
+ * @param <Item>
  *            The items to hold in the Deque
  */
-public final class Deque<I> implements Iterable<I> {
+public class Deque<Item> implements Iterable<Item> {
 
     private boolean debuggin = true;
 
     /** index of the first item. */
-    private Node<I> first = null;
+    private Node<Item> first = null;
     /** index of the last item. */
-    private Node<I> last = null;
+    private Node<Item> last = null;
     /** counter of items in the Deque. */
     private int size = 0;
     
@@ -50,7 +50,7 @@ public final class Deque<I> implements Iterable<I> {
         return size;
     }
 
-    private void addFirstNode(Node<I> node) {
+    private void addFirstNode(Node<Item> node) {
     
         first = node;
         last = node;
@@ -62,20 +62,20 @@ public final class Deque<I> implements Iterable<I> {
      * @param item
      *            The item to add to the Deque
      */
-    public void addFirst(I item) {
+    public void addFirst(Item item) {
 
         if (item == null) {
             throw new NullPointerException("Item can't be null.");
         }
         assert item != null;
         
-        Node<I> node = getNode(item);
+        Node<Item> node = getNode(item);
         
         if (size == 0) {
             addFirstNode(node);
         } else {
             
-            Node<I> prevFirst = first;
+            Node<Item> prevFirst = first;
             node.setNext(prevFirst);
             prevFirst.setPrev(node);
             first = node;
@@ -90,20 +90,20 @@ public final class Deque<I> implements Iterable<I> {
      * @param item
      *            The item to add to the Deque
      */
-    public void addLast(I item) {
+    public void addLast(Item item) {
 
         if (item == null) {
             throw new NullPointerException("Item can't be null.");
         }
         assert item != null;
         
-        Node<I> node = getNode(item);
+        Node<Item> node = getNode(item);
         
         if (size == 0) {
             addFirstNode(node);
         } else {
 
-            Node<I> prevLast = last;
+            Node<Item> prevLast = last;
             prevLast.setNext(node);
             node.setPrev(prevLast);
             last = node;
@@ -116,11 +116,11 @@ public final class Deque<I> implements Iterable<I> {
      * 
      * @return The item at the front
      */
-    public I removeFirst() {
+    public Item removeFirst() {
 
         validateDequeIsNotEmpty();
         
-        I item = first.getItem();
+        Item item = first.getItem();
         first = first.getNext();
         size--;
         return item;
@@ -131,11 +131,11 @@ public final class Deque<I> implements Iterable<I> {
      * 
      * @return The item at the end
      */
-    public I removeLast() {
+    public Item removeLast() {
 
         validateDequeIsNotEmpty();
         
-        I item = last.getItem();
+        Item item = last.getItem();
         last = last.getPrev();
         size--;
         return item;
@@ -144,7 +144,7 @@ public final class Deque<I> implements Iterable<I> {
     /**
      * Returns an iterator over items of a Deque in order from front to end.
      */
-    public Iterator<I> iterator() {
+    public Iterator<Item> iterator() {
 
         return new DequeIterator();
     }
@@ -156,9 +156,9 @@ public final class Deque<I> implements Iterable<I> {
         }
     }
 
-    final class DequeIterator implements Iterator<I> {
+    final class DequeIterator implements Iterator<Item> {
         
-        private Node<I> current = first;
+        private Node<Item> current = first;
 
         @Override
         public boolean hasNext() {
@@ -166,13 +166,13 @@ public final class Deque<I> implements Iterable<I> {
         }
 
         @Override
-        public I next() {
+        public Item next() {
 
             if (!hasNext()) {
                 throw new NoSuchElementException(
                         "There is no more elements to retrieve");
             }
-            I item  = current.getItem();
+            Item item  = current.getItem();
             current = current.getNext();
             return item;
         }
