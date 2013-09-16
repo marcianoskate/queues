@@ -403,4 +403,31 @@ public class DequeTest {
         System.out.println("===============");
         
     }
+    
+    // Test 10: Check iterator() after intermixed calls to addFirst(),
+    // addLast(), removeFirst(), and removeLast()
+    @Test
+    public void intermixedCallsToAddFirstLastRemoveFirstLast() {
+        
+        Deque<String> deque;
+        deque = getNewDeque();
+        
+        deque.addFirst("Hello");
+        deque.addLast("World");
+        deque.addFirst("This");
+        deque.addLast("is");
+        deque.addFirst("Carlos");
+        Assert.assertEquals(5, deque.size());
+        
+        deque.removeFirst();
+        deque.removeLast();
+        deque.removeFirst();
+        deque.removeLast();
+        deque.removeFirst();
+        Assert.assertEquals(0, deque.size());
+        
+        for (String item : deque) { 
+            System.out.println(item);
+        }
+    }
 }

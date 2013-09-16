@@ -135,8 +135,21 @@ public class Deque<Item> implements Iterable<Item> {
 
         validateDequeIsNotEmpty();
         
-        Item item = last.getItem();
-        last = last.getPrev();
+        Node<Item> auxLast = last;
+        Item item = auxLast.getItem();
+        
+        if (first == last) {
+            first = null;
+            last = null;
+        } else {
+            
+            Node<Item> prev = auxLast.getPrev();
+            if (prev != null) {
+                prev.setNext(null);
+                last = auxLast.getPrev();
+            }
+        }
+        
         size--;
         return item;
     }
