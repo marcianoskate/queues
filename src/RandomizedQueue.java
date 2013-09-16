@@ -51,7 +51,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
 
         size++;
     }
-
+    
     private void resizeIndexes(int newSize) {
 
         Object[] newArray = new Object[newSize];
@@ -119,7 +119,7 @@ public class RandomizedQueue<Item> implements Iterable<Item> {
         readjustIndexes(index);
 
         size--;
-        if (size == indexes.length / 4) {
+        if (size > 0 && size == indexes.length / 4) {
             resizeIndexes(indexes.length / 2);
         }
         return nodeToReturn.getItem();

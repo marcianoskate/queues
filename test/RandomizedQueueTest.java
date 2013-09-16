@@ -246,4 +246,29 @@ public class RandomizedQueueTest {
         }
         System.out.println("=================");
     }
+    
+    // Test 2: Calls to enqueue() and dequeue()
+    // More dequeues than enqueues
+    @Test
+    public void callMoreDequeueThanEnqueue() {
+        
+        RandomizedQueue<String> queue;
+        queue = getNewQueue();
+        
+        queue.enqueue("hello");
+        for (int i = 0; i < 5; i++) {
+
+            if (StdRandom.uniform() < 0.1) {
+                
+                queue.enqueue("hello");
+            } else {
+                try {
+                    
+                    queue.dequeue();
+                } catch (NoSuchElementException nse) {
+                    System.out.println("expected error");
+                }
+            }
+        }
+    }
 }
