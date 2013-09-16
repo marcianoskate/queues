@@ -156,7 +156,7 @@ public class Deque<Item> implements Iterable<Item> {
         }
     }
 
-    final class DequeIterator implements Iterator<Item> {
+    private final class DequeIterator implements Iterator<Item> {
         
         private Node<Item> current = first;
 
