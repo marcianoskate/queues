@@ -23,7 +23,7 @@ public class BoardTest {
         assertEquals(8, board.dimension());
     }
     
-    private Board getNewBoard() {
+    private Board getExampleBoard() {
         
         int[][] values = 
             {{0, 1, 3},
@@ -31,12 +31,28 @@ public class BoardTest {
              {7, 8, 6}};
         return new Board(values);
     }
+    
+    private Board getSolvedBoard() {
+        
+        int[][] values = 
+            {{1, 2, 3},
+                {4, 5, 6},
+                {7, 8, 0}};
+        return new Board(values);
+    }
 
+    @Test
+    public void hammingInSolvedMustBeZero() {
+        
+        Board board = getSolvedBoard();
+        assertEquals(0, board.hamming());
+    }
+    
     @Test
     public void hamming() {
         
-        Board board = getNewBoard();
-        assertEquals(4, board.haming());
+        Board board = getExampleBoard();
+        assertEquals(4, board.hamming());
     }
     
 }
