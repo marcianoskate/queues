@@ -3,6 +3,7 @@ public class Board {
     
     private final int   n;
     private final int[] board;
+    private final int[] solved;
     
     private int hamming = 0;
 
@@ -10,14 +11,19 @@ public class Board {
         
         this.n = values.length;
         this.board = new int[n*n];
+        this.solved = new int[n*n];
         
         int x = 0;
+        int count = 1;
         for (int[] row : values) {
             
             int y = 0;
             for (int col : row) {
                 
-                board[y + x * n] = col;
+                int pos = y + x * n;
+                board[pos] = col;
+                solved[pos] = count % (solved.length + 1); //last value must be 0
+                count++;
                 y++;
             }
             
