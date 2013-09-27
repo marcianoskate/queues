@@ -48,4 +48,8 @@ public class Board {
         }
         return hamming;
     }
+
+    public int manhattan() {
+        return 0;
+    }
 }

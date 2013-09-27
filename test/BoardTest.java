@@ -49,10 +49,23 @@ public class BoardTest {
     }
     
     @Test
-    public void hamming() {
+    public void hammingInExampleMustBeFour() {
         
         Board board = getExampleBoard();
         assertEquals(4, board.hamming());
     }
     
+    @Test
+    public void manhattanInSolvedMustBeZero() {
+        
+        Board board = getSolvedBoard();
+        assertEquals(0, board.manhattan());
+    }
+    
+    @Test
+    public void manhattanInExampleMustBeFour() {
+        
+        Board board = getExampleBoard();
+        assertEquals(4, board.manhattan());
+    }
 }
