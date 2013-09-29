@@ -50,6 +50,14 @@ public class BoardTest {
         return new Board(values);
     }
 
+    private Board getEmptlyTopLeftBoard() {
+        int[][] values = 
+            {{0, 1, 3},
+             {4, 2, 5},
+             {7, 8, 6}};
+        return new Board(values);
+    }
+
     @Test
     public void hammingInSolvedMustBeZero() {
         
@@ -174,5 +182,19 @@ public class BoardTest {
         Board board1 = getExampleBoard();
         Board board2 = getCrazyBoard();
         assertFalse(board1.equals(board2));
+    }
+    
+    @Test
+    public void neighborsLeftTop() {
+        
+        Board board = getEmptlyTopLeftBoard();
+        assertNotNull(board.neighbors());
+        // When the empty tile is in the top left corner, there is only 2 
+        // valid moves. Therefore, the neighbors must be 2
+        int cont = 0;
+        for (Board actual : board.neighbors()) {
+            cont++;
+        }
+        assertEquals(2, cont);
     }
 }

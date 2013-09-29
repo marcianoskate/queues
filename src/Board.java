@@ -32,9 +32,9 @@ public class Board {
         }
     }
 
-    private Board(int[] board, int n) {
+    private Board(int[] board) {
         
-        this.n = n;
+        this.n = (int) Math.sqrt(board.length);
         this.board = Arrays.copyOf(board, board.length);
     }
 
@@ -115,7 +115,7 @@ public class Board {
 
     public Board twin() {
         
-        int[] copy = Arrays.copyOf(board, board.length);
+        int[] copy = cloneBoard();
         int firstIndex = -1;
         int secondIndex = -1;
         for (int i = 0; i < copy.length; i++) {
@@ -142,7 +142,7 @@ public class Board {
                 break;
             }
         }
-        return new Board(copy, n);
+        return new Board(copy);
     }
 
     private void swap(int[] copy, int firstIndex, int secondIndex) {
@@ -179,5 +179,21 @@ public class Board {
                 return false;
         }
         return true;
+    }
+
+    public Iterable<Board> neighbors() {
+        
+        Queue<Board> queue = new Queue<>();
+        int[] neigh1 = cloneBoard();
+        swap(neigh1, 0, 1);
+        queue.enqueue(new Board(neigh1));
+        int[] neigh2 = cloneBoard();
+        swap(neigh1, 0, 3);
+        queue.enqueue(new Board(neigh2));
+        return queue;
+    }
+
+    private int[] cloneBoard() {
+        return Arrays.copyOf(board, board.length);
     }
 }
