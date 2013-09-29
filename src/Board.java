@@ -90,4 +90,17 @@ public class Board {
         }
         return manhattan;
     }
+
+    public boolean isGoal() {
+        
+        int cont = 1;
+        for (int value : board) {
+            
+            if (value != 0 && value != cont) {
+                return false;
+            }
+            cont++;
+        }
+        return true;
+    }
 }
