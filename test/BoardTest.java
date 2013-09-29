@@ -68,4 +68,15 @@ public class BoardTest {
         Board board = getExampleBoard();
         assertEquals(4, board.manhattan());
     }
+
+    @Test
+    public void manhattanInCrazyBoard() {
+
+        int[][] values =
+            {{5, 7, 8},
+                {6, 3, 4},
+                {2, 0, 1}};
+        Board board = new Board(values);
+        assertEquals(21, board.manhattan());
+    }
 }
