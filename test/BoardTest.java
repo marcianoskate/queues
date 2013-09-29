@@ -50,10 +50,26 @@ public class BoardTest {
         return new Board(values);
     }
 
-    private Board getEmptlyTopLeftBoard() {
+    private Board getTopLeftBoard() {
         int[][] values = 
             {{0, 1, 3},
              {4, 2, 5},
+             {7, 8, 6}};
+        return new Board(values);
+    }
+
+    private Board getTopCenterBoard() {
+        int[][] values = 
+            {{1, 0, 3},
+             {4, 2, 5},
+             {7, 8, 6}};
+        return new Board(values);
+    }
+
+    private Board getCenterBoard() {
+        int[][] values = 
+            {{1, 2, 3},
+             {4, 0, 5},
              {7, 8, 6}};
         return new Board(values);
     }
@@ -187,7 +203,7 @@ public class BoardTest {
     @Test
     public void neighborsLeftTop() {
         
-        Board board = getEmptlyTopLeftBoard();
+        Board board = getTopLeftBoard();
         assertNotNull(board.neighbors());
         // When the empty tile is in the top left corner, there is only 2 
         // valid moves. Therefore, the neighbors must be 2
@@ -197,4 +213,33 @@ public class BoardTest {
         }
         assertEquals(2, cont);
     }
+    
+    @Test
+    public void neighborsCenterTop() {
+        
+        Board board = getTopCenterBoard();
+        assertNotNull(board.neighbors());
+        // When the empty tile is in the top left corner, there is only 2 
+        // valid moves. Therefore, the neighbors must be 2
+        int cont = 0;
+        for (Board actual : board.neighbors()) {
+            cont++;
+        }
+        assertEquals(3, cont);
+    }
+    
+    @Test
+    public void neighborsCenter() {
+        
+        Board board = getCenterBoard();
+        assertNotNull(board.neighbors());
+        // When the empty tile is in the top left corner, there is only 2 
+        // valid moves. Therefore, the neighbors must be 2
+        int cont = 0;
+        for (Board actual : board.neighbors()) {
+            cont++;
+        }
+        assertEquals(4, cont);
+    }
+    
 }
