@@ -104,4 +104,16 @@ public class Board {
         }
         return true;
     }
+
+    @Override
+    public String toString() {
+
+        StringBuilder s = new StringBuilder();
+        s.append(n + "\n");
+        for (int i = 0; i < board.length; i++) {
+            s.append(String.format("%2d ", board[i]));
+            if ((i + 1) % n == 0) s.append("\n");
+        }
+        return s.toString();
+    }
 }
