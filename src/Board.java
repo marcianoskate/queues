@@ -1,5 +1,6 @@
 public class Board {
 
+    private static final int EMPTY_TILE = 0;
     private final int n;
     private final int[] board;
 
@@ -51,9 +52,9 @@ public class Board {
     public int hamming() {
 
         int cont = 1;
-        for (int number : board) {
+        for (int value : board) {
 
-            if (number != 0 && number != cont) {
+            if (value != EMPTY_TILE && value != cont) {
                 hamming++;
             }
             cont++;
@@ -74,7 +75,7 @@ public class Board {
         while (currPos < board.length) {
 
             int value = board[currPos];
-            if (value != 0) {
+            if (value != EMPTY_TILE) {
 
                 int expectedX = (value - 1) / n;
                 int expectedY = (value - 1) % n;
@@ -96,7 +97,7 @@ public class Board {
         int cont = 1;
         for (int value : board) {
             
-            if (value != 0 && value != cont) {
+            if (value != EMPTY_TILE && value != cont) {
                 return false;
             }
             cont++;
