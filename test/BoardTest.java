@@ -122,4 +122,57 @@ public class BoardTest {
         Board twin = board.twin();
         System.out.println(twin.toString());
     }
+    
+    @Test
+    public void equalsNull() {
+        
+        Board board = getExampleBoard();
+        assertFalse(board.equals(null));
+    }
+    
+    @Test
+    public void equalsReflexive() {
+        
+        Board board = getExampleBoard();
+        assertTrue(board.equals(board));
+    }
+    
+    @Test
+    public void equalsSymmetric() {
+        
+        Board board1 = getExampleBoard();
+        Board board2 = getExampleBoard();
+        assertTrue(board1.equals(board2));
+        assertTrue(board2.equals(board1));
+    }
+    
+    @Test
+    public void equalsTransitiveTrue() {
+        
+        Board board1 = getExampleBoard();
+        Board board2 = getExampleBoard();
+        Board board3 = getExampleBoard();
+        assertTrue(board1.equals(board2));
+        assertTrue(board2.equals(board3));
+        assertTrue(board1.equals(board3));
+    }
+    
+    @Test
+    public void equalsTransitiveFalse() {
+        
+        Board board1 = getExampleBoard();
+        Board board2 = getExampleBoard();
+        Board board3 = getSolvedBoard();
+        assertTrue(board1.equals(board2));
+        assertFalse(board2.equals(board3));
+        assertFalse(board1.equals(board3));
+    }
+    
+    @Test
+    public void equalsExampleAndCrazyBoards() {
+        
+        Board board1 = getExampleBoard();
+        Board board2 = getCrazyBoard();
+        assertFalse(board1.equals(board2));
+    }
 }

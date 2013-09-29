@@ -162,4 +162,22 @@ public class Board {
         }
         return s.toString();
     }
+    
+    @Override
+    public boolean equals(Object obj) {
+        
+        if (obj == null) return false;
+        if (this == obj) return true;
+        if (!(obj instanceof Board)) return false;
+        
+        Board newBoard = (Board) obj;
+        if (this.n != newBoard.n) return false;
+        
+        for (int i = 0; i < n*n; i++) {
+            
+            if (this.board[i] != newBoard.board[i])
+                return false;
+        }
+        return true;
+    }
 }
