@@ -32,6 +32,15 @@ public class BoardTest {
         return new Board(values);
     }
     
+    private Board getCrazyBoard() {
+        
+        int[][] values = 
+            {{5, 7, 8},
+                {6, 3, 4},
+                {2, 0, 1}};
+        return new Board(values);
+    }
+
     private Board getSolvedBoard() {
         
         int[][] values = 
@@ -72,11 +81,8 @@ public class BoardTest {
     @Test
     public void manhattanInCrazyBoard() {
         
-        int[][] values = 
-            {{5, 7, 8},
-                {6, 3, 4},
-                {2, 0, 1}};
-        Board board = new Board(values);
+        
+        Board board = getCrazyBoard();
         assertEquals(21, board.manhattan());
     }
     
@@ -94,4 +100,26 @@ public class BoardTest {
         assertTrue(board.isGoal());
     }
     
+    @Test
+    public void twin() {
+        
+        System.out.println("==== EXAMPLE TWIN ====");
+        Board board = getExampleBoard();
+        System.out.println(board.toString());
+        
+        Board twin = board.twin();
+        System.out.println(twin.toString());
+    }
+    
+    
+    @Test
+    public void twinSecond() {
+        
+        System.out.println("==== CRAZY TWIN ====");
+        Board board = getCrazyBoard();
+        System.out.println(board.toString());
+        
+        Board twin = board.twin();
+        System.out.println(twin.toString());
+    }
 }

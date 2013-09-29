@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class Board {
 
     private static final int EMPTY_TILE = 0;
@@ -28,6 +30,12 @@ public class Board {
 
             x++;
         }
+    }
+
+    private Board(int[] board, int n) {
+        
+        this.n = n;
+        this.board = Arrays.copyOf(board, board.length);
     }
 
     /**
@@ -105,9 +113,47 @@ public class Board {
         return true;
     }
 
+    public Board twin() {
+        
+        int[] copy = Arrays.copyOf(board, board.length);
+        int firstIndex = -1;
+        int secondIndex = -1;
+        for (int i = 0; i < copy.length; i++) {
+            
+            if (i % n == 0) {
+                firstIndex = -1;
+                secondIndex = -1;
+            }
+            
+            if (copy[i] != EMPTY_TILE) {
+                
+                if (firstIndex == -1) {
+                    
+                    firstIndex = i;
+                } else if (secondIndex == -1) {
+                    
+                    secondIndex = i;
+                }
+            }
+            
+            if (firstIndex != -1 && secondIndex != -1) {
+                
+                swap(copy, firstIndex, secondIndex);
+                break;
+            }
+        }
+        return new Board(copy, n);
+    }
+
+    private void swap(int[] copy, int firstIndex, int secondIndex) {
+        int aux = copy[firstIndex];
+        copy[firstIndex] = copy[secondIndex];
+        copy[secondIndex] = aux;
+    }
+    
     @Override
     public String toString() {
-
+        
         StringBuilder s = new StringBuilder();
         s.append(n + "\n");
         for (int i = 0; i < board.length; i++) {
